@@ -17,5 +17,3 @@ function showObjectKeys(obj) {
 };
 console.log(showObjectKeys(audi));
 
-/* const showObjectKeys = Object.keys(audi);
-console.log(showObjectKeys) */
