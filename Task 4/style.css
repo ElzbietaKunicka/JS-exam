@@ -27,3 +27,9 @@
   margin-top: 50px;
   color: #333;
 }
+
+span {
+  font-weight: 700;
+  font-size: 1.8rem;
+  color: rgb(245, 224, 224);
+}
