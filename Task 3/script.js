@@ -13,19 +13,17 @@ turėti bent minimalų stilių ir būti responsive;
 
 const ENDPOINT = "https://api.github.com/users";
 
-const userCard = parameter => {
-  if (parameter && parameter.length) {
-    const paragraph = document.querySelector("#message");
-    paragraph.textContent = "";
-    const propertycontainer = document.getElementById("output");
-    propertycontainer.style.display = "flex";
-    propertycontainer.style.flexWrap = "wrap";
-    propertycontainer.style.justifyContent = "center";
-    propertycontainer.style.gap = "2rem";
-    propertycontainer.style.margin = "2.4rem auto";
-    propertycontainer.style.width = "50%";
+const userCard = parametr => {
+  if (parametr && parametr.length) {
+    const paragraph = document.getElementById("message");
+    paragraph.parentNode.removeChild(paragraph);
+    const propertyContainer = document.getElementById("output");
+    propertyContainer.style.display = "flex";
+    propertyContainer.style.flexWrap = "wrap";
+    propertyContainer.style.justifyContent = "space-evenly";
+    propertyContainer.style.gap = "2rem";
 
-    parameter.forEach(property => {
+    parametr.forEach(property => {
       const card = document.createElement("div");
       card.style.border = "0.2rem solid black";
       card.style.textAlign = "center";
@@ -41,24 +39,18 @@ const userCard = parameter => {
       card.append(img, intro);
       document.querySelector("#output").append(card);
     });
+  };
+};
+
+const getUsers = async event => {
+  event.preventDefault();
+  try {
+    const response = await fetch(ENDPOINT);
+    const data = await response.json();
+    userCard(data);
+  } catch (error) {
+    console.log(error);
   }
 };
-userCard();
 
-function getUserFun(event) {
-  event.preventDefault();
-
-  const getUsers = async () => {
-    try {
-      const response = await fetch(ENDPOINT);
-      const data = await response.json();
-      userCard(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  getUsers();
-}
-
-const showUsers = document.querySelector("button");
-showUsers.addEventListener("click", getUserFun);
+const showUsers = document.querySelector("button").addEventListener("click", getUsers);
