@@ -33,5 +33,8 @@ function getUserAverageAge() {
 };
 console.log(getUserAverageAge(users));
 
-const getUsersNames = users.map(user => user.name);
-console.log(getUsersNames);
+function getUsersNames (arr) {
+  const arrayNames = arr.map(user => user.name);
+  return arrayNames;
+};
+console.log(getUsersNames(users));
