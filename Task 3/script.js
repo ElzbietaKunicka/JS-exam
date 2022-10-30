@@ -11,4 +11,46 @@ Pastaba: Sukurta kortelė, kurioje yra pateikiama vartotojo informacija, turi
 turėti bent minimalų stilių ir būti responsive;
 -------------------------------------------------------------------------- */
 
-const ENDPOINT = 'https://api.github.com/users';
+const ENDPOINT = "https://api.github.com/users";
+
+const userCard = parametr => {
+  if (parametr && parametr.length) {
+    const paragraph = document.getElementById("message");
+    paragraph.parentNode.removeChild(paragraph);
+    const propertyContainer = document.getElementById("output");
+    propertyContainer.style.display = "flex";
+    propertyContainer.style.flexWrap = "wrap";
+    propertyContainer.style.justifyContent = "space-evenly";
+    propertyContainer.style.gap = "2rem";
+
+    parametr.forEach(property => {
+      const card = document.createElement("div");
+      card.style.border = "0.2rem solid black";
+      card.style.textAlign = "center";
+
+      const img = document.createElement("img");
+      img.src = property.avatar_url;
+      img.alt = `${property.login} picture`;
+      img.style.width = "20rem";
+
+      const intro = document.createElement("h2");
+      intro.textContent = property.login;
+
+      card.append(img, intro);
+      document.querySelector("#output").append(card);
+    });
+  };
+};
+
+const getUsers = async event => {
+  event.preventDefault();
+  try {
+    const response = await fetch(ENDPOINT);
+    const data = await response.json();
+    userCard(data);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const showUsers = document.querySelector("button").addEventListener("click", getUsers);
